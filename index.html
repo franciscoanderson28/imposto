@@ -1,81 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador de Imposto de Renda</title>
+    <title>Verificador de Imposto de Renda 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Estilos CSS */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --warning-color: #fca311;
+            --danger-color: #ef233c;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
         }
+        
         #container {
             width: 90%;
-            max-width: 600px;
-            padding: 20px;
+            max-width: 700px;
+            padding: 2.5rem;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
+        
         h1 {
             text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
         }
+        
+        .welcome-message {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+        
         form {
             display: flex;
             flex-direction: column;
+            gap: 1rem;
         }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+        
         label {
-            margin-bottom: 4px;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
         }
-        input {
-            padding: 8px;
-            margin-bottom: 16px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+        
+        input, select {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
+        
+        input:focus, select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
         button {
-            padding: 10px;
-            background-color: #007bff;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
         }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
         #monthlyIncomes {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.25rem;
+            margin: 1.5rem 0;
         }
+        
+        .month-input {
+            background-color: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+        
+        .month-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
         #result {
-            margin-top: 20px;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 500;
+            animation: fadeIn 0.5s ease;
+            background-color: #f8f9fa;
+        }
+        
+        .success {
+            background-color: rgba(75, 181, 67, 0.1);
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .warning {
+            background-color: rgba(252, 163, 17, 0.1);
+            color: var(--warning-color);
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .info-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .info-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .tax-info {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .tax-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            #container {
+                padding: 1.5rem;
+            }
+            
+            #monthlyIncomes {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div id="container">
-        <h1 id="welcomeMessage">Verificador de Imposto de Renda</h1>
+        <h1>Verificador de Imposto de Renda 2025</h1>
+        <div id="welcomeMessage" class="welcome-message">Informe seus dados para verificar</div>
+        
         <form id="nameForm">
-            <label for="userName">Qual seu nome?</label>
-            <input type="text" id="userName" required>
-            <button type="button" onclick="saveName()">Salvar Nome</button>
-        </form>
-        <form id="taxForm" style="display: none;">
-            <label for="income">Digite sua Renda Mensal para Cada Mês:</label>
-            <div id="monthlyIncomes">
-                <!-- Campos de entrada para renda mensal de cada mês -->
+            <div class="form-group">
+                <label for="userName">Qual seu nome?</label>
+                <input type="text" id="userName" required placeholder="Digite seu nome completo">
             </div>
-            <button type="button" onclick="checkTax()">Verificar</button>
+            <button type="button" onclick="saveName()">Continuar</button>
         </form>
+        
+        <form id="taxForm" style="display: none;">
+            <div class="form-group">
+                <label>Digite sua Renda Mensal para Cada Mês (R$):</label>
+                <div id="monthlyIncomes">
+                    <!-- Campos de entrada para renda mensal de cada mês -->
+                </div>
+            </div>
+            <button type="button" onclick="checkTax()">Calcular Imposto</button>
+        </form>
+        
         <div id="result"></div>
+        
+        <div id="taxInfo" class="tax-info" style="display: none;">
+            <h3>Informações sobre a Tabela do IR 2025</h3>
+            <p>Base de cálculo mensal em R$:</p>
+            <ul>
+                <li>Até 2.259,20 - Isento</li>
+                <li>De 2.259,21 até 2.826,65 - 7,5% (dedução de R$ 169,44)</li>
+                <li>De 2.826,66 até 3.751,05 - 15% (dedução de R$ 381,44)</li>
+                <li>De 3.751,06 até 4.664,68 - 22,5% (dedução de R$ 662,77)</li>
+                <li>Acima de 4.664,68 - 27,5% (dedução de R$ 896,00)</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            Desenvolvido para fins educacionais por Francisco Anderson | Dados atualizados conforme tabela do IR 2025
+        </div>
     </div>
 
     <script>
@@ -85,57 +256,113 @@
         // Função para criar campos de entrada para renda mensal de cada mês
         function createMonthlyIncomeInputs() {
             var container = document.getElementById('monthlyIncomes');
-            for (var i = 1; i <= 12; i++) {
+            var months = [
+                'Janeiro', 'Fevereiro', 'Março', 'Abril',
+                'Maio', 'Junho', 'Julho', 'Agosto',
+                'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+            ];
+            
+            for (var i = 0; i < 12; i++) {
+                var monthContainer = document.createElement('div');
+                monthContainer.className = 'month-input';
+                
                 var label = document.createElement('label');
-                label.textContent = 'Mês ' + i + ':';
+                label.textContent = months[i] + ':';
+                label.htmlFor = 'incomeMonth' + (i+1);
+                
                 var input = document.createElement('input');
                 input.type = 'number';
-                input.id = 'incomeMonth' + i;
+                input.id = 'incomeMonth' + (i+1);
                 input.required = true;
-                var inputContainer = document.createElement('div');
-                inputContainer.appendChild(label);
-                inputContainer.appendChild(input);
-                container.appendChild(inputContainer);
+                input.placeholder = 'R$ 0,00';
+                input.step = "0.01";
+                input.min = "0";
+                
+                monthContainer.appendChild(label);
+                monthContainer.appendChild(input);
+                container.appendChild(monthContainer);
             }
         }
 
         // Função para salvar o nome e mostrar a mensagem de boas-vindas
         function saveName() {
-            userName = document.getElementById('userName').value;
-            if (userName.trim() !== "") {
-                document.getElementById('welcomeMessage').innerText = "Bem-vindo(a), " + userName + "!";
+            userName = document.getElementById('userName').value.trim();
+            if (userName !== "") {
+                document.getElementById('welcomeMessage').innerHTML = "Olá, <strong>" + userName + "</strong>!<br>Informe suas rendas mensais";
                 document.getElementById('nameForm').style.display = 'none';
                 document.getElementById('taxForm').style.display = 'block';
+                document.getElementById('taxInfo').style.display = 'block';
             } else {
                 alert("Por favor, insira seu nome.");
             }
         }
 
+        // Função para calcular o imposto devido conforme a tabela 2025
+        function calculateTax(income) {
+            // Tabela progressiva do IRPF 2025 (valores mensais)
+            if (income <= 2259.20) return 0;
+            if (income <= 2826.65) return income * 0.075 - 169.44;
+            if (income <= 3751.05) return income * 0.15 - 381.44;
+            if (income <= 4664.68) return income * 0.225 - 662.77;
+            return income * 0.275 - 896.00;
+        }
+
         // Função para verificar se é necessário declarar imposto de renda
         function checkTax() {
+            // Verifica se todos os campos foram preenchidos
+            var allFilled = true;
+            for (var i = 1; i <= 12; i++) {
+                if (document.getElementById('incomeMonth' + i).value === "") {
+                    allFilled = false;
+                    break;
+                }
+            }
+            
+            if (!allFilled) {
+                alert("Por favor, preencha todos os campos com suas rendas mensais.");
+                return;
+            }
+            
             // Array para armazenar as rendas mensais
             var incomes = [];
-            // Obter as rendas mensais para cada mês
+            var annualIncome = 0;
+            var totalTax = 0;
+            
+            // Obter as rendas mensais para cada mês e calcular impostos
             for (var i = 1; i <= 12; i++) {
                 var income = parseFloat(document.getElementById('incomeMonth' + i).value);
                 incomes.push(income);
+                annualIncome += income;
+                
+                // Calcular imposto mensal
+                totalTax += calculateTax(income);
             }
             
-            // Definir os limites de isenção para o ano-calendário 2024
-            var isentoAntesDeMaio = 1903.98; // Limite de isenção mensal antes de maio
-            var isentoDepoisDeMaio = 2112.00; // Limite de isenção mensal a partir de maio
+            // Limite mensal de isenção
+            var monthlyExemption = 2259.20;
             
             // Verificar se há algum mês acima do limite de isenção
-            var needsToDeclare = incomes.some((income, index) => {
-                var isento = index < 4 ? isentoAntesDeMaio : isentoDepoisDeMaio;
-                return income > isento;
-            });
+            var needsToDeclare = incomes.some(income => income > monthlyExemption);
 
             // Mostrar o resultado com o nome do usuário
+            var resultDiv = document.getElementById('result');
+            
             if (needsToDeclare) {
-                document.getElementById('result').innerHTML = userName + ", você precisa declarar o imposto de renda. <br> <a href='https://www.gov.br/receitafederal/pt-br/'>Clique aqui</a> para acessar a página da Receita Federal e Fazer sua declaração.";
+                resultDiv.className = 'warning';
+                resultDiv.innerHTML = `
+                    <p><strong>${userName}</strong>, você precisa declarar o imposto de renda.</p>
+                    <p>Imposto estimado anual: <strong>R$ ${totalTax.toFixed(2)}</strong></p>
+                    <p>Renda anual: R$ ${annualIncome.toFixed(2)}</p>
+                    <a href="https://www.gov.br/receitafederal/pt-br" class="info-link" target="_blank">
+                        Acesse a página da Receita Federal para fazer sua declaração →
+                    </a>
+                `;
             } else {
-                document.getElementById('result').innerText = userName + ", você não precisa declarar o imposto de renda. Fique tranquilo!";
+                resultDiv.className = 'success';
+                resultDiv.innerHTML = `
+                    <p><strong>${userName}</strong>, você não precisa declarar o imposto de renda.</p>
+                    <p>Sua renda anual de R$ ${annualIncome.toFixed(2)} está abaixo dos limites obrigatórios.</p>
+                `;
             }
         }
 
@@ -143,9 +370,6 @@
         window.onload = function() {
             createMonthlyIncomeInputs();
         };
-
-                                                       // SITE DESENVOLVIDO PARA FINS EDUCACIONAIS DE FRANCISCO ANDERSON
-
     </script>
 </body>
 </html>
